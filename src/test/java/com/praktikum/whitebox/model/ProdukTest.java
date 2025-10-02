@@ -126,4 +126,5 @@ public class ProdukTest {
         assertNotEquals(produk1, produk3); // kode berbeda
         assertEquals(produk1.hashCode(), produk2.hashCode());
     }
+
 }
