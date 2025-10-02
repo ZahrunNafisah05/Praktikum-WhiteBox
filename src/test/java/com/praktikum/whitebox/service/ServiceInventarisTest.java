@@ -287,4 +287,13 @@ public class ServiceInventarisTest {
         int totalStok = serviceInventaris.hitungTotalStok();
         assertEquals(7, totalStok);
     }
+
+    @Test
+    @DisplayName("Tambah produk gagal - produk tidak valid")
+    void testTambahProdukTidakValid() {
+        Produk produkInvalid = new Produk("", "", "", 0, -1, 0); // data salah/invalid
+        boolean hasil = serviceInventaris.tambahProduk(produkInvalid);
+        assertFalse(hasil);
+    }
+
 }
