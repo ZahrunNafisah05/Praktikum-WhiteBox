@@ -1,88 +1,109 @@
 package com.praktikum.whitebox.model;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class KategoriTest {
+class KategoriTest {
+
     @Test
-    @DisplayName("Test constructor default dan parameter")
-    void testConstructors() {
-        // Default constructor
-        Kategori k1 = new Kategori();
-        assertNull(k1.getKode());
-        assertNull(k1.getNama());
-        assertNull(k1.getDeskripsi());
-        assertFalse(k1.isAktif()); // default boolean = false
-
-        // Constructor dengan parameter
-        Kategori k2 = new Kategori("KTG01", "Nama", "Deskripsi");
-        assertEquals("KTG01", k2.getKode());
-        assertEquals("Nama", k2.getNama());
-        assertEquals("Deskripsi", k2.getDeskripsi());
-        assertTrue(k2.isAktif()); // default aktif = true
+    void testDefaultConstructor() {
+        Kategori kategori = new Kategori();
+        assertNull(kategori.getKode());
+        assertNull(kategori.getNama());
+        assertNull(kategori.getDeskripsi());
+        assertFalse(kategori.isAktif()); // default boolean = false
     }
 
     @Test
-    @DisplayName("Test getter dan setter")
-    void testGettersAndSetters() {
-        Kategori k = new Kategori();
-        k.setKode("KTG02");
-        k.setNama("Kategori Test");
-        k.setDeskripsi("Deskripsi Test");
-        k.setAktif(true);
-
-        assertEquals("KTG02", k.getKode());
-        assertEquals("Kategori Test", k.getNama());
-        assertEquals("Deskripsi Test", k.getDeskripsi());
-        assertTrue(k.isAktif());
+    void testConstructorWithArgs() {
+        Kategori kategori = new Kategori("K001", "Makanan", "Kategori makanan");
+        assertEquals("K001", kategori.getKode());
+        assertEquals("Makanan", kategori.getNama());
+        assertEquals("Kategori makanan", kategori.getDeskripsi());
+        assertTrue(kategori.isAktif()); // constructor set aktif = true
     }
 
     @Test
-    @DisplayName("Test equals method untuk semua branch")
-    void testEquals() {
-        Kategori k1 = new Kategori("KTG01", "Nama1", "Desk1");
-        Kategori k2 = new Kategori("KTG01", "Nama2", "Desk2");
-        Kategori k3 = new Kategori("KTG02", "Nama3", "Desk3");
+    void testSettersAndGetters() {
+        Kategori kategori = new Kategori();
+        kategori.setKode("K002");
+        kategori.setNama("Minuman");
+        kategori.setDeskripsi("Kategori minuman");
+        kategori.setAktif(true);
 
-        // this == o
-        assertTrue(k1.equals(k1));
-
-        // o == null
-        assertFalse(k1.equals(null));
-
-        // o beda class
-        assertFalse(k1.equals("string"));
-
-        // kode sama → true (walau nama/deskripsi beda)
-        assertTrue(k1.equals(k2));
-
-        // kode beda → false
-        assertFalse(k1.equals(k3));
+        assertEquals("K002", kategori.getKode());
+        assertEquals("Minuman", kategori.getNama());
+        assertEquals("Kategori minuman", kategori.getDeskripsi());
+        assertTrue(kategori.isAktif());
     }
 
     @Test
-    @DisplayName("Test hashCode konsisten dengan equals")
-    void testHashCode() {
-        Kategori k1 = new Kategori("KTG01", "Nama", "Desk");
-        Kategori k2 = new Kategori("KTG01", "Nama Lain", "Desk Lain");
+    void testEqualsAndHashCode() {
+        Kategori k1 = new Kategori("K003", "Snack", "Cemilan");
+        Kategori k2 = new Kategori("K003", "Camilan", "Makanan Ringan");
+        Kategori k3 = new Kategori("K004", "Buah", "Buah Segar");
 
-        assertEquals(k1.hashCode(), k2.hashCode()); // karena kode sama
+        // equals berdasarkan kode
+        assertEquals(k1, k2);
+        assertNotEquals(k1, k3);
+
+        // hashCode juga berdasarkan kode
+        assertEquals(k1.hashCode(), k2.hashCode());
+        assertNotEquals(k1.hashCode(), k3.hashCode());
     }
 
     @Test
-    @DisplayName("Test toString menghasilkan format yang benar")
+    void testEqualsWithDifferentObject() {
+        Kategori kategori = new Kategori("K005", "Sayur", "Sayuran");
+        assertNotEquals(kategori, "string");
+        assertNotEquals(kategori, null);
+    }
+
+    @Test
     void testToString() {
-        Kategori k = new Kategori("KTG01", "Nama", "Desk");
-        String result = k.toString();
+        Kategori kategori = new Kategori("K006", "Daging", "Produk daging");
+        String str = kategori.toString();
 
-        assertTrue(result.contains("KTG01"));
-        assertTrue(result.contains("Nama"));
-        assertTrue(result.contains("Desk"));
-        assertTrue(result.contains("true"));
+        assertTrue(str.contains("K006"));
+        assertTrue(str.contains("Daging"));
+        assertTrue(str.contains("Produk daging"));
+        assertTrue(str.contains("aktif=true"));
     }
+    @Test
+    void testEqualsSelf() {
+        Kategori kategori = new Kategori("K007", "Elektronik", "Barang elektronik");
+        assertEquals(kategori, kategori); // harus true saat dibandingkan dengan dirinya sendiri
+    }
+
+    @Test
+    void testHashCodeConsistency() {
+        Kategori kategori = new Kategori("K008", "Perabot", "Barang rumah tangga");
+        int hash1 = kategori.hashCode();
+        int hash2 = kategori.hashCode();
+        assertEquals(hash1, hash2); // konsisten
+    }
+
+    @Test
+    void testSetAktifFalse() {
+        Kategori kategori = new Kategori("K009", "Pakaian", "Kategori pakaian");
+        kategori.setAktif(false);
+        assertFalse(kategori.isAktif());
+    }
+
+    @Test
+    void testToStringWhenNotActive() {
+        Kategori kategori = new Kategori();
+        kategori.setKode("K010");
+        kategori.setNama("Kosmetik");
+        kategori.setDeskripsi("Produk kecantikan");
+        kategori.setAktif(false);
+
+        String str = kategori.toString();
+        assertTrue(str.contains("K010"));
+        assertTrue(str.contains("Kosmetik"));
+        assertTrue(str.contains("Produk kecantikan"));
+        assertTrue(str.contains("aktif=false")); // pastikan boolean false ikut tercetak
+    }
+
 }

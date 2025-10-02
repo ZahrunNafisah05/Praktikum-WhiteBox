@@ -20,6 +20,10 @@ public class Produk {
         this.stokMinimum = stokMinimum;
         this.aktif = true;
     }
+
+    public Produk(String prod001, String produkTest, int i, int i1) {
+    }
+
     // Getters and Setters
     public String getKode() { return kode; }
     public void setKode(String kode) { this.kode = kode; }
@@ -48,7 +52,6 @@ public class Produk {
         return stok > stokMinimum;
     }
     public void kurangiStok(int jumlah) {
-
 
         if (jumlah <= 0) {
             throw new IllegalArgumentException("Jumlah harus positif");

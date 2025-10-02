@@ -310,6 +310,4 @@ public class ServiceInventarisTest {
         assertTrue(hasil.isEmpty());
         verify(mockRepositoryProduk).cariByKategori("");
     }
-
-
 }

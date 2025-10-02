@@ -2,7 +2,6 @@ package com.praktikum.whitebox.model;
 import java.util.Objects;
 public class Kategori {
 
-
     private String kode;
     private String nama;
     private String deskripsi;
