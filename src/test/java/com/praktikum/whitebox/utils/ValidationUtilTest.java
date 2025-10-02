@@ -147,4 +147,44 @@ public class ValidationUtilTest {
         assertFalse(ValidationUtils.isValidKuantitas(0));// nol tidak valid
         assertFalse(ValidationUtils.isValidKuantitas(-5));// negatif
     }
+    // =====================
+    // Extra test untuk validasi nama produk
+    // =====================
+    @Test
+    @DisplayName("Nama produk dengan spasi dan angka masih valid")
+    void testIsValidNamaDenganSpasiAngka() {
+        assertTrue(ValidationUtils.isValidNama("Laptop Gaming 123"));
+    }
+
+    // =====================
+    // Extra test untuk validasi kategori
+    // =====================
+    @Test
+    @DisplayName("Kategori dengan nama kosong atau null tidak valid")
+    void testIsValidKategoriNamaKosong() {
+        Kategori kategori = new Kategori();
+        kategori.setKode("KTG02");
+        kategori.setNama(""); // kosong
+        kategori.setDeskripsi("Deskripsi");
+
+        assertFalse(ValidationUtils.isValidKategori(kategori));
+
+        kategori.setNama(null); // null
+        assertFalse(ValidationUtils.isValidKategori(kategori));
+    }
+    @Test
+    @DisplayName("Produk dengan stok 0 atau stok minimum negatif tidak valid")
+    void testIsValidProdukInvalidStok() {
+        Produk p = new Produk();
+        p.setKode("PRD02");
+        p.setNama("Produk B");
+        p.setKategori("Kategori1");
+        p.setHarga(5000);
+        p.setStok(0);          // stok 0 → tidak valid karena stok > 0
+        p.setStokMinimum(-1);  // stok minimum negatif → tidak valid
+
+        assertFalse(ValidationUtils.isValidProduk(p));
+    }
+
+
 }

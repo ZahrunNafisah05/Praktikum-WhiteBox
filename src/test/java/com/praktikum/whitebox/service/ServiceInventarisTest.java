@@ -295,5 +295,21 @@ public class ServiceInventarisTest {
         boolean hasil = serviceInventaris.tambahProduk(produkInvalid);
         assertFalse(hasil);
     }
+    @Test
+    @DisplayName("Cari produk by nama - input kosong")
+    void testCariProdukByNamaKosong() {
+        List<Produk> hasil = serviceInventaris.cariProdukByNama("");
+        assertTrue(hasil.isEmpty()); // atau bisa assertNotNull tergantung implementasi mock
+        verify(mockRepositoryProduk).cariByNama("");
+    }
+
+    @Test
+    @DisplayName("Cari produk by kategori - input kosong")
+    void testCariProdukByKategoriKosong() {
+        List<Produk> hasil = serviceInventaris.cariProdukByKategori("");
+        assertTrue(hasil.isEmpty());
+        verify(mockRepositoryProduk).cariByKategori("");
+    }
+
 
 }
